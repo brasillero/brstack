@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+*.log
+# Eval results (agentskills.io evaluating-skills workspace)
+*-workspace/

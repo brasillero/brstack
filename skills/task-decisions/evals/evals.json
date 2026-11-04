@@ -1,0 +1,130 @@
+{
+  "skill_name": "task-decisions",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Start notes for ABC-7.",
+      "expected_output": "The task-decisions skill loads and handles the request.",
+      "setup": "A repository without .task-decisions/.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "What is open?",
+      "expected_output": "The task-decisions skill loads and handles the request.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Why did we keep the two address forms?",
+      "expected_output": "The task-decisions skill loads and handles the request.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Close #1, done in `b2c3d4e`.",
+      "expected_output": "The task-decisions skill loads and handles the request.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Show the notes.",
+      "expected_output": "The task-decisions skill loads and handles the request.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Review my Jira backlog and suggest priorities.",
+      "expected_output": "The task-decisions skill does not load; the request is outside its scope.",
+      "setup": "Any repository.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Write an architecture decision record in docs/adr/.",
+      "expected_output": "The task-decisions skill does not load; the request is outside its scope.",
+      "setup": "A repository with docs/adr/.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "Close GitHub issue #12.",
+      "expected_output": "The task-decisions skill does not load; the request is outside its scope.",
+      "setup": "Any repository.",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "Start task notes here; keep them local, not committed.",
+      "expected_output": "Asks for language, tracker, prefix and areas if not obvious; adds /.task-decisions/ to the file printed by `git rev-parse --git-path info/exclude` (not .git/info/exclude, which is a file here); `git check-ignore` confirms it; the project README.md says `Local only.`; nothing committed.",
+      "setup": "A linked worktree (`git worktree add`) of a repository without .task-decisions/.",
+      "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "Record a decision: we accept the duplicated address forms as debt until the redesign.",
+      "expected_output": "Asks who decided if unknown; adds a decision with a concrete `revisit if`; creates a `Tech debt` item in Deferred with `origin: D<n>`; no origin loop.",
+      "setup": "shop-web without #3 and D1.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "We now validate coupons on the server only; the browser check goes.",
+      "expected_output": "New decision with `origin: D2`; D2's heading becomes `Superseded by D<new>`, its body untouched; no open item has `origin: D2`, so there is nothing to ask about.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "Drop D2, we are not doing coupon validation at all.",
+      "expected_output": "D2 becomes `Revoked`; a new decision with `origin: D2` says why; asks about open items that came from D2.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 13,
+      "prompt": "The merge request is approved; finish the task.",
+      "expected_output": "#1 closed (with evidence) or deferred with a reason, nothing left in Active; `state: Done`, `end` set, summary rewritten as the outcome; no commit unless asked (then on the branch, in a commit of its own, only notes files staged); no push.",
+      "setup": "shop-web on branch ABC-123.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "Move #3 to ABC-200.",
+      "expected_output": "New item in ABC-200 with `origin: ABC-123#3`, same type, area, created and body, local references made full; #3 closed as `Moved` with `outcome: → ABC-200#<n>`, text unchanged.",
+      "setup": "shop-web with an ABC-200 task.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "Reopen #2, the shipping bug is back.",
+      "expected_output": "#2 untouched; a new item with `origin: #2`.",
+      "files": [
+        "evals/files/shop-web"
+      ]
+    },
+    {
+      "id": 16,
+      "prompt": "Bring our TODO.md into task-decisions.",
+      "expected_output": "Proposes the mapping and waits; done lines become closed items whose `outcome` cites TODO.md or the commit; the \"later\" line is Deferred with a `reason`; real dates kept, unknown ones said so in the body; no guessed values; the shape check passes; TODO.md untouched.",
+      "setup": "A repository with a TODO.md of five lines, two marked done (one with a commit hash), one marked \"later\", dates on some.",
+      "files": []
+    }
+  ]
+}
