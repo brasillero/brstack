@@ -1,6 +1,10 @@
 ---
 name: delegate
-description: Split work between Codex (investigation and analysis), a Claude subagent (implementation) and Claude (orchestration and final review). Use when a task involves investigating a bug, analyzing or planning a change, or implementing code.
+description: >-
+  Use when a bug investigation, planning task, or code change needs another agent.
+  Codex investigates and plans changes. A Claude subagent implements them.
+  The main Claude session coordinates the work and reviews the result.
+compatibility: The default workflow uses Claude Code subagents and the Codex CLI.
 ---
 
 # Delegation

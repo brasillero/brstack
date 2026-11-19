@@ -1,8 +1,13 @@
 ---
 name: task-decisions
-description: "Manages task notes in a repository's .task-decisions/ folder - a backlog (#1, #2…) and a decision log (D1, D2…) per task, in Markdown with fixed shapes. Use when the user asks to start, resume, pause or finish task notes in this format; to add, close, defer or move an item in a .task-decisions backlog; to record, supersede, revoke or look up a decision and why it was made; to ask what is open, deferred or provisional in .task-decisions; to turn one of its items into tracker text; or to open the notes viewer. Not for backlogs kept in Jira, GitHub Issues or other trackers."
+description: >-
+  Keep a task's backlog and decision log in .task-decisions/ as Markdown.
+  Start, resume, pause, or finish task notes. Add, close, defer, or move backlog
+  items. Record, supersede, or revoke decisions. Look up what is open, deferred,
+  or provisional and why a decision was made. Draft tracker text from an entry
+  or open the notes viewer on request.
 license: MIT
-compatibility: The helper scripts need Node.js 20 or newer and git; no dependencies, no network access.
+compatibility: The helper scripts require Node.js 20 or newer and Git and run offline.
 ---
 
 # Task decisions

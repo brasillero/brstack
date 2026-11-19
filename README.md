@@ -15,7 +15,7 @@ nothing here is magic. it's the stuff i kept repeating to my agents, written dow
 | [`delegate`](skills/delegate/SKILL.md) | "Investigate this bug" · "Implement it" | Splits the work: Codex investigates, a Claude subagent implements, Claude orchestrates and does the final review. Other models only when you name them. |
 | [`review-comment-writing`](skills/review-comment-writing/SKILL.md) | (automatic) · "Post that review" | Writes clear review feedback and preserves the intended format: general comment, resolvable discussion, or thread on the code. Asks when placement is unclear. Only for people; agents get the full version. |
 | [`task-decisions`](skills/task-decisions/SKILL.md) | "Start notes for ABC-123" · "Record a decision" · "What's still open?" | Keeps a backlog and a decision log per task in `.task-decisions/`, in plain Markdown, so "why did we do this?" still has an answer next month. |
-| [`test-audit`](skills/test-audit/SKILL.md) | "Run `test-audit` on this suite" | Finds tests that protect nothing, slow tests, and gaps in coverage. Applies fixes and uses mutation testing to check that existing protections still hold. |
+| [`test-audit`](skills/test-audit/SKILL.md) | `/test-audit` · `$test-audit` (Codex) | Finds tests that protect nothing, slow tests, and gaps in coverage. Applies fixes and uses mutation testing to check that existing protections still hold. |
 
 ## Install
 
@@ -27,7 +27,11 @@ It asks which skills and agents you want. `task-decisions` needs Node.js 20+ and
 
 ## How it's laid out
 
-Each skill lives in `skills/<name>/` and follows the [Agent Skills spec](https://agentskills.io/specification): a `SKILL.md`, plus `scripts/`, `references/`, `assets/` and `evals/` when it needs them. Tests for a skill's scripts live in `tests/<name>/`, outside the skill, so they don't get installed. Run them with:
+Each skill lives in `skills/<name>/`. Its `SKILL.md` starts with the `name` and `description` fields from the [Agent Skills specification](https://agentskills.io/specification#frontmatter). Supporting files live alongside it.
+
+Invocation settings are client-specific. For `test-audit`, `disable-model-invocation: true` in `SKILL.md` makes it manual in Claude Code, Cursor, and VS Code. The [Codex policy](skills/test-audit/agents/openai.yaml) makes it manual there as well.
+
+Tests for a skill's scripts live in `tests/<name>/`, outside the skill, so they don't get installed. Run them with:
 
 ```sh
 node --test tests/*/*.test.mjs

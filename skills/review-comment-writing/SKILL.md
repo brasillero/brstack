@@ -1,6 +1,9 @@
 ---
 name: review-comment-writing
-description: Write clear review feedback for people and, when asked to publish it, choose the intended general comment, resolvable discussion, or code-linked review thread. Use for PR/MR feedback shown to a developer or posted to a review. Not for findings passed between agents.
+description: >-
+  Write or revise feedback for a developer on a pull request or merge request.
+  When asked to post it, keep the intended format. Use a general comment,
+  a resolvable discussion, or a thread on the relevant line of code.
 ---
 
 # Review comment writing
