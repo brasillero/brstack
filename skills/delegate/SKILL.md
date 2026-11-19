@@ -3,7 +3,7 @@ name: delegate
 description: >-
   Use when a bug investigation, planning task, or code change needs another agent.
   Codex investigates and plans changes. A Claude subagent implements them.
-  The main Claude session coordinates the work and reviews the result.
+  The main session coordinates the work and reviews the result.
 compatibility: The default workflow uses Claude Code subagents and the Codex CLI.
 ---
 
@@ -23,15 +23,11 @@ When it's not clear whether to delegate, or to whom, ask the user before startin
 
 ## Roles
 
-These are the defaults:
+- **Investigate and plan.** Use GPT-6.2 Sol through the Codex CLI when available.
+- **Implement.** Use a Claude Opus 5.5 subagent.
+- **Coordinate and review.** The main session owns the workflow and final review with its current settings.
 
-| Role | Who | Effort |
-|---|---|---|
-| Investigation, analysis, planning | Codex CLI, GPT-6.1 Sol | medium; xhigh when hard |
-| Implementation (the implementer) | Claude subagent, Opus 5.5 | medium; high for complex or cross-cutting changes |
-| Orchestration, final review | You: Claude Opus 5.5, the main session | medium; high for security or architecture |
-
-Use another model or provider for a role only when the user names it explicitly for this task. Then use exactly what they named. Don't swap a default on your own, not even when it's unavailable or seems a better fit: say what's wrong and ask.
+Set effort to `high` on every delegated run. If the Codex CLI, a model, or a provider is unavailable, tell the user and ask how to proceed. Use another model or provider only when the user explicitly names it for the task.
 
 ## Full flow (when the task needs all of it)
 
@@ -52,17 +48,11 @@ Use another model or provider for a role only when the user names it explicitly 
 ## Codex
 
 - In non-interactive runs, close stdin, or it waits forever.
-- Raise to `xhigh` when any of these apply:
-  - there is no reliable repro;
-  - the bug crosses modules or services;
-  - it involves concurrency, security, or performance with conflicting evidence;
-  - it is an architecture decision with real tradeoffs.
-- Don't use `max`. It costs more and does no better than `xhigh`.
 - Investigation never gets write access.
 
 ## Implementer
 
-- Run the implementer as a Claude subagent on Opus 5.5. Set the model explicitly, so it doesn't fall back to a smaller default subagent model.
+- Set the implementer's model explicitly when starting the Claude subagent.
 - It starts with no context from your session, so the brief is all it knows. When the task is complex, add the minimum context that changes how it implements: the investigation's finding, a decision the user made, an approach already ruled out. Leave out the rest of the conversation.
 - Keep one task per implementer. If it loops re-reading files or stalls, stop it and re-brief smaller.
 
@@ -71,5 +61,3 @@ Use another model or provider for a role only when the user names it explicitly 
 Codex and the implementer share no context with your session. Every brief is self-contained: goal, relevant files, constraints, what "done" means, and how to verify. Say whether it is an investigation or an implementation brief.
 
 In implementation briefs, tell the implementer to fix problems rather than silence checks, and to say so when a check can't pass. Add tests only where they're needed and fit the project's existing tests. If the project has no tests at all, don't create committed ones; a throwaway check to verify the change is fine.
-
-_Model lineup as of October 2026. Revisit when models change._
