@@ -15,6 +15,7 @@ nothing here is magic. it's the stuff i kept repeating to my agents, written dow
 | [`council`](skills/council/SKILL.md) | "Council, review this" · "council" | Fixes known issues first, then asks three strong models from different providers to review in parallel. Scores each round out of 10, repeats until all are satisfied, keeps scope tight, and puts the scores in the PR description. |
 | [`delegate`](skills/delegate/SKILL.md) | "Investigate this bug" · "Implement it" | Codex investigates, a Claude subagent implements, and the main session coordinates and reviews. Other models only when you name them. |
 | [`review-comment-writing`](skills/review-comment-writing/SKILL.md) | (automatic) · "Post that review" | Writes clear review feedback and preserves the intended format: general comment, resolvable discussion, or thread on the code. Asks when placement is unclear. Only for people; agents get the full version. |
+| [`sol-loop`](skills/sol-loop/SKILL.md) | "sol loop" | GPT Sol reviews your change in a loop: 3 rounds by default, up to 5 for security, auth, data loss or concurrency. Makes the smallest fixes, pushes back on scope creep, and reports what Sol changed. |
 | [`task-decisions`](skills/task-decisions/SKILL.md) | "Start notes for ABC-123" · "Record a decision" · "What's still open?" | Keeps a backlog and a decision log per task in `.task-decisions/`, in plain Markdown, so "why did we do this?" still has an answer next month. |
 | [`test-audit`](skills/test-audit/SKILL.md) | `/test-audit` · `$test-audit` (Codex) | Finds tests that protect nothing, slow tests, and gaps in coverage. Applies fixes and uses mutation testing to check that existing protections still hold. |
 
@@ -41,3 +42,7 @@ node --test tests/*/*.test.mjs
 ## Make them yours
 
 They're written for how I work, like my own model setup in `delegate`. Fork them and change whatever doesn't fit you.
+
+## Credits
+
+`council` and `sol-loop` come from Theo Browne's [tstack](https://github.com/t3dotgg/tstack) (commit [`11e37a7`](https://github.com/t3dotgg/tstack/tree/11e37a74d0a6868c121cd0910ab2b3bd9873b92a/skills)). Their frontmatter was changed here, and `sol-loop` also handles GitLab merge requests with `glab`.
