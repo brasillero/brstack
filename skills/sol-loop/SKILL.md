@@ -38,7 +38,7 @@ Find the base after `git fetch origin`:
 
 - PR or MR: get its target branch and head commit. GitHub:
   `gh pr view <n> --json baseRefName,headRefOid`. GitLab:
-  `glab mr view <n> -F json --jq '{target_branch, sha}'`. Check out the
+  `glab mr view <n> -F json`, fields `target_branch` and `sha`. Check out the
   branch only if clean. Confirm `HEAD` is the head commit, or ahead only by
   this change. Base: `git merge-base HEAD origin/<target branch>`.
 - Local: `git merge-base HEAD origin/<default-branch>`. No remote: a base
