@@ -12,6 +12,7 @@ nothing here is magic. it's the stuff i kept repeating to my agents, written dow
 
 | Skill | Say | What it does |
 | --- | --- | --- |
+| [`council`](skills/council/SKILL.md) | "Council, review this" · "council" | Fixes known issues first, then asks three strong models from different providers to review in parallel. Scores each round out of 10, repeats until all are satisfied, keeps scope tight, and puts the scores in the PR description. |
 | [`delegate`](skills/delegate/SKILL.md) | "Investigate this bug" · "Implement it" | Codex investigates, a Claude subagent implements, and the main session coordinates and reviews. Other models only when you name them. |
 | [`review-comment-writing`](skills/review-comment-writing/SKILL.md) | (automatic) · "Post that review" | Writes clear review feedback and preserves the intended format: general comment, resolvable discussion, or thread on the code. Asks when placement is unclear. Only for people; agents get the full version. |
 | [`task-decisions`](skills/task-decisions/SKILL.md) | "Start notes for ABC-123" · "Record a decision" · "What's still open?" | Keeps a backlog and a decision log per task in `.task-decisions/`, in plain Markdown, so "why did we do this?" still has an answer next month. |
