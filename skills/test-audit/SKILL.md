@@ -59,7 +59,7 @@ Spawn an implementer and give it the decisions, the protections, the mutation se
 - **Mutation proof before each cut.** Before it shrinks a test or moves it to deep, it runs every mutation of that family from `mutations.md` and shows that the gate still fails. It records the proof in the commit message and in `changes.md`.
 - **One row per change in `changes.md`.** Each row has the action, the test count and seconds before and after, the protection kept and the proof.
 - **A deep tier.** It tags the exhaustive sweeps, adds a script that runs them, such as `test:deep`, and adds a scheduled CI job for that script. The CI that runs on each push stays unchanged. It documents both in the repo's agent docs.
-- **A green gate and local commits only.** It commits each change locally and does not push. At the end it measures again with the baseline method and writes `after.*` and `deep.*`.
+- **A green gate and local commits only.** It commits locally and does not push. At the end it measures again with the baseline method and writes `after.*` and `deep.*`.
 
 This step is done when the gate passes, `changes.md` is complete and the new measurements exist.
 
@@ -76,4 +76,4 @@ Push only if the user allows it, and then record the CI times. The report contai
 - a chart of seconds per protection family before and after, using the family of each test file from the inventory in `audit-report.md`;
 - a chart of the number of changes per action;
 - each deferred finding with the input it needs;
-- each mutation that the baseline gate missed.
+- each mutation that exposed a weakness in the baseline suite, such as a gap or a weak test.

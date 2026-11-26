@@ -24,8 +24,8 @@ The second section lists the findings. Give each finding a file and line, a clas
 - **Slow.** For each of the heaviest tests, describe how to keep what it catches at a lower cost. Options are shared fixtures, a smaller equivalent case, a lower resolution, a few targeted extremes instead of a full sweep, or a move to deep.
 - **Gap.** A protection family, or one of its mutations, that no gate test catches.
 
-The third section is a plan ordered by priority. Give each action its estimated saving in test count, local time and CI time, and its risk. Name the tests that must keep catching their mutations after the changes.
+The third section is a plan ordered by priority. Give each action its estimated saving in test count, local time and CI time, and its risk. Name the tests whose assertions the changes must not weaken.
 
-Also write `findings.json` in [audit folder]. It is an array of objects with these fields: `id`, `file`, `line`, `class`, `family`, `recommendation`, `risk`, `est_seconds_saved` and `evidence`. Put the failure case and the mutation result in `evidence`. The orchestrator uses this file for decisions and charts.
+Also write `findings.json` in [audit folder]. It is an array of objects with these fields: `id`, `file`, `line`, `class`, `family`, `recommendation`, `risk`, `est_seconds_saved` and `evidence`. Put the failure case in `evidence`, and the mutation result when the finding has one. The orchestrator uses this file for decisions.
 
 Run the suite with timing per file. Try one or two of your proposed speed-ups in the snapshot to calibrate the estimates. Back every claim of the class redundant or weak with a mutation result.
