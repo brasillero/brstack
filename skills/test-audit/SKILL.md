@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # Test audit
 
-You orchestrate four roles: you decide, one sub-agent audits, a second sub-agent applies the changes, and a third sub-agent verifies them. Each sub-agent starts with a fresh context and gets its instructions from a brief file in this folder.
+You orchestrate four roles. You decide. The auditor finds problems, the implementer applies the changes, and the verifier checks them. Each of these three is a sub-agent with a fresh context. The auditor and the verifier get their instructions from a brief file in this folder.
 
 Create one audit folder outside the repo, for example `<scratch>/test-audit-<date>/`. Every role reads and writes its files there, so no result lives only in a chat message.
 
-Three words have a fixed meaning in this skill:
+These terms have a fixed meaning in this skill:
 - **Protection.** A property that the suite must keep catching when the code breaks it.
 - **Mutation.** A small, temporary change to production code that a real bug could cause. Run it to prove that a test catches it, then restore the code.
 - **Gate and deep.** The gate is the suite that runs on every push. Deep is the exhaustive suite that runs on a schedule.
@@ -43,11 +43,11 @@ This step is done when every family has at least one mutation that the gate catc
 
 Spawn the auditor on a pinned, read-only snapshot. Its instructions are in [auditor-brief.md](auditor-brief.md). Fill in the repo path, the commit and the audit folder. The auditor writes `audit-report.md` and `findings.json`.
 
-This step is done when both files exist and every finding has a file and line, a class, a recommendation and a risk.
+This step is done when both files exist and every finding has a file and line, a class, a failure case, a recommendation and a risk.
 
 ## 4. Decide
 
-Mark each finding in `findings.json` as apply, defer or reject, with a reason. Defer a finding that needs an input you do not have, and name that input. Reject a finding that would remove the last gate test of a protection family. Move that coverage instead of dropping it.
+For each finding in `findings.json`, write a decision in `decisions.md`: apply, defer or reject, with a reason. Defer a finding that needs an input you do not have, and name that input. Reject a finding that would remove the last gate test of a protection family. Move that coverage instead of dropping it.
 
 If the user chose approval first, show the decisions table and wait for the answer.
 
@@ -56,10 +56,10 @@ This step is done when every finding has a decision and a reason in `decisions.m
 ## 5. Apply
 
 Spawn an implementer and give it the decisions, the protections, the mutation set and the baseline method. It follows these rules:
-- **Proof for every smaller check.** Before it shrinks a test or moves it to deep, it runs every mutation of that family from `mutations.md` and shows that the gate still fails. It records the proof in the commit message and in `changes.md`.
+- **Mutation proof before each cut.** Before it shrinks a test or moves it to deep, it runs every mutation of that family from `mutations.md` and shows that the gate still fails. It records the proof in the commit message and in `changes.md`.
 - **One row per change in `changes.md`.** Each row has the action, the test count and seconds before and after, the protection kept and the proof.
 - **A deep tier.** It tags the exhaustive sweeps, adds a script that runs them, such as `test:deep`, and adds a scheduled CI job for that script. The CI that runs on each push stays unchanged. It documents both in the repo's agent docs.
-- **A green gate and local commits only.** At the end it measures again with the baseline method and writes `after.*` and `deep.*`.
+- **A green gate and local commits only.** It commits locally and does not push. At the end it measures again with the baseline method and writes `after.*` and `deep.*`.
 
 This step is done when the gate passes, `changes.md` is complete and the new measurements exist.
 
@@ -73,7 +73,7 @@ Send each blocker back to the implementer, then run the verifier again. This ste
 
 Push only if the user allows it, and then record the CI times. The report contains these parts:
 - the gate test count, the local wall time, the CI step time, and the deep test count and time, each before and after;
-- a chart of seconds per protection family before and after, using the family of each test in `findings.json`;
+- a chart of seconds per protection family before and after, using the family of each test file from the inventory in `audit-report.md`;
 - a chart of the number of changes per action;
 - each deferred finding with the input it needs;
-- each mutation that showed an old weakness.
+- each mutation that exposed a weakness in the baseline suite, such as a gap or a weak test.
