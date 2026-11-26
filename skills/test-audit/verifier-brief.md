@@ -6,7 +6,7 @@ Verify the result of a test audit in [repo path], from [baseline commit] to [res
 
 Read these inputs from [audit folder]: `protections.md`, `mutations.md`, `audit-report.md`, `decisions.md`, `changes.md`, and the baseline and after measurements.
 
-Confirm that the gate lost no protection and that the new and changed tests have none of the flaws that the checks below look for. Do these checks:
+Confirm that the gate lost no protection and that the new and changed tests are sound. The checks below are the minimum. Report any other defect you find in those tests. Do these checks:
 1. **Mutation regression.** Run every mutation in `mutations.md` against the new gate, and restore the code after each one. A mutation that the old gate caught and the new gate misses is a blocker, even if deep catches it.
 2. **New mutations.** Add at least one mutation per protection family. Aim them at tests that were shrunk, merged, moved or rewritten. Prefer mutations that leave summary numbers unchanged, such as volume, count, bounds or length, while the result is wrong. Run each one against the old gate and the new gate, and report every mutation that passes the new gate.
 3. **Recorded proofs.** Run again at least six of the proofs recorded in `changes.md`.

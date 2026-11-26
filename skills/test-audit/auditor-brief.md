@@ -24,7 +24,7 @@ The second section lists the findings. Give each finding a file and line, a clas
 - **Slow.** For each of the heaviest tests, describe how to keep what it catches at a lower cost. Options are shared fixtures, a smaller equivalent case, a lower resolution, a few targeted extremes instead of a full sweep, or a move to deep.
 - **Gap.** A protection family, or one of its mutations, that no gate test catches.
 
-The third section is a plan ordered by priority. Give each action its estimated saving in test count, local time and CI time, and its risk. Name the tests whose assertions the changes must not weaken.
+The third section is a plan ordered by priority. Give each action its estimated saving in test count, local time and CI time, and its risk. Name the tests that the changes must not weaken, in either the inputs they exercise or the assertions they make.
 
 Also write `findings.json` in [audit folder]. It is an array of objects with these fields: `id`, `file`, `line`, `class`, `family`, `recommendation`, `risk`, `est_seconds_saved` and `evidence`. Put the failure case in `evidence`, and the mutation result when the finding has one. The orchestrator uses this file for decisions.
 
